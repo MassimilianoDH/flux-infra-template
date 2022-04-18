@@ -1,0 +1,19 @@
+# THIS IS HOW YOU HANDLE INGRESS WITH A SEPARATE INGRESS FILE
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vault
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: "vault..com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: vault
+            port:
+              number: 8200
