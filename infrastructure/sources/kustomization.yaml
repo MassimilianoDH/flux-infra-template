@@ -3,5 +3,7 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - bitnami.yaml
+  - ORGANIZATION.yaml
   - hashicorp.yaml
-  - podinfo.yaml
+  - chartmuseum.yaml
+  - fairwinds-stable.yaml

@@ -1,23 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: vault
+  name: polaris
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
-  - host: "vault.ORGANIZATION.com"
+  - host: "polaris.ORGANIZATION.com"
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: vault
+            name: polaris-dashboard
             port:
-              number: 8200
+              number: 8300
   tls:
   - hosts:
-    - vault.ORGANIZATION.com
-    secretName: vault-ORGANIZATION-tls
+    - polaris.ORGANIZATION.com
+    secretName: polaris-ORGANIZATION-tls

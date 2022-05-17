@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bitcoind
+spec:
+  releaseName: bitcoind
+  chart:
+    spec:
+      chart: bitcoind
+      sourceRef:
+        kind: HelmRepository
+        name: ORGANIZATION
+        namespace: flux-system
+      version: "0.1.0"
+  interval: 1h
+  install:
+    remediation:
+      retries: 3
+  # https://github.com/ORGANIZATION/chart-museum/blob/master/charts/bitcoind/values.yaml
+  values:
+    securityContext:
+      enabled: true
+      runAsUser: 100
+      runAsGroup: 100
+      fsGroup: 100
+      allowPrivilegeEscalation: false
+    command: 
+      enabled: true
+      cmd: ["bitcoind"]
+      args: [
+        "-txindex=1",
+        "-blockfilterindex=1",
+        "-server=1",
+        "-rpcbind=0.0.0.0",
+        "-rpcallowip=172.0.0.0/8",
+        "-rpcallowip=192.0.0.0/8",
+        "-rpcallowip=127.0.0.1",
+        "-rpcallowip=10.0.0.0/8",
+        "-rpcport=8332",
+        "-zmqpubrawblock=tcp://0.0.0.0:18332",
+        "-zmqpubrawtx=tcp://0.0.0.0:18333",
+        "-zmqpubhashblock=tcp://0.0.0.0:18334",
+        "-zmqpubhashtx=tcp://0.0.0.0:18335"
+      ]

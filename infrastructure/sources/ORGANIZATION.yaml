@@ -1,0 +1,17 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: ORGANIZATION
+spec:
+  interval: 30m
+  url: https://charts.ORGANIZATION.com/
+  secretRef:
+    name: ORGANIZATION-user
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ORGANIZATION-user
+stringData:
+  username: ORGANIZATION
+  password: PASSWORD

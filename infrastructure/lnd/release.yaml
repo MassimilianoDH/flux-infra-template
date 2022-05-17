@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: lnd
+spec:
+  releaseName: lnd
+  chart:
+    spec:
+      chart: lnd
+      sourceRef:
+        kind: HelmRepository
+        name: ORGANIZATION
+        namespace: flux-system
+      version: "0.1.0"
+  interval: 01h
+  install:
+    remediation:
+      retries: 3
+  # https://github.com/ORGANIZATION/chart-museum/blob/master/charts/lnd/values.yaml
+  values:
+    rpc:
+      user: ORGANIZATION
+      pass: PASSWORD
+    command: 
+      enabled: true
+      cmd: ["lnd"]
+      args: [
+        "--bitcoin.active",
+        "--bitcoin.mainnet",
+        "--debuglevel=debug",
+        "--bitcoin.node=bitcoind",
+        "--bitcoind.zmqpubrawblock=tcp://bitcoind.bitcoind.svc.cluster.local:28332",
+        "--bitcoind.zmqpubrawtx=tcp://bitcoind.bitcoind.svc.cluster.local:28333",
+        "--externalip=bitcoind.bitcoind.svc.cluster.local:8332"
+      ]

@@ -2,5 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - sources
-  - nginx
   - vault
+  - chartmuseum
+  - nginx
+  - certmanager
+  - bitcoind
+  - redis
+  - polaris
+  - lnd
+  - nodejs
+  - postgres
